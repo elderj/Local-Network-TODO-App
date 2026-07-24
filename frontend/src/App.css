@@ -1,0 +1,85 @@
+body {
+  margin: 0;
+  background-color: #f4f6f8;
+  font-family: system-ui, -apple-system, sans-serif;
+}
+
+.container {
+  max-width: 1000px;
+  margin: 40px auto;
+  padding: 20px;
+}
+
+.todo {
+  background: white;
+  padding: 12px 14px;
+  margin-bottom: 10px;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+}
+
+
+h1 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.todo h3 {
+  margin: 0 0 6px 0;
+}
+
+.todo p {
+  margin: 0 0 8px 0;
+  color: #555;
+}
+
+button {
+  margin-right: 6px;
+  padding: 6px 10px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  background: #e0e0e0;
+}
+
+button:hover {
+  background: #d5d5d5;
+}
+
+button:last-child {
+  background: #ffbbbb;
+}
+
+button:last-child:hover {
+  background: #ff0000;
+}
+
+input {
+  padding: 8px;
+  margin: 4px 0;
+  width: 100%;
+  box-sizing: border-box;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
+
+.board {
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+}
+
+.column {
+  flex: 1;
+  background: #dfe3e6;
+  padding: 12px;
+  border-radius: 10px;
+  min-height: 500px;
+  
+
+}
+
+.column h2 {
+  margin-top: 0;
+}

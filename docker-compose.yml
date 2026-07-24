@@ -1,0 +1,19 @@
+services:
+  frontend:
+    build:
+      context: ./frontend
+    container_name: todo-frontend
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    command: npm run host-dev
+  backend:
+    build:
+      context: ./backend
+    container_name: todo-backend
+    ports:
+      - "3030:3030"
+    volumes:
+      - ./backend/data:/app/data
