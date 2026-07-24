@@ -11,9 +11,9 @@ services:
     command: npm run host-dev
   backend:
     build:
-      context: ./backend
+      context: ./backend-node
     container_name: todo-backend
     ports:
       - "3030:3030"
     volumes:
-      - ./backend/data:/app/data
+      - ./backend-node/data:/app/data
