@@ -16,4 +16,4 @@ services:
     ports:
       - "3030:3030"
     volumes:
-      - ./backend-node/data:/app/data
+      - ./database:/database
