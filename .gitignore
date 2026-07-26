@@ -1,10 +1,16 @@
 # Node
 node_modules/
+dist/
 
 # Rails
-vendor/bundle/
-tmp/
-log/
+log/*
+tmp/*
+storage/*.sqlite3
+.bundle/
+
+# SQLite runtime files
+database/*.db-shm
+database/*.db-wal
 
 # Etc.
-.vscode/
+.env

@@ -9,63 +9,76 @@ app.use(cors());
 app.use(express.json());
 
 app.get("/todos", (req, res) => {
-	const todos = db.prepare(`
+  const todos = db
+    .prepare(
+      `
     SELECT * FROM todos
-  `).all();
+  `,
+    )
+    .all();
 
-	res.json(todos);
+  res.json(todos);
 });
 
 app.post("/todos", (req, res) => {
-	const { title, desc } = req.body;
+  const { title, desc } = req.body;
 
-	const stmt = db.prepare(`
+  const stmt = db.prepare(`
     INSERT INTO todos (title, desc)
     VALUES (?, ?)
   `);
 
-	const result = stmt.run(title, desc);
+  const result = stmt.run(title, desc);
 
-	const newTodo = db.prepare(`
+  const newTodo = db
+    .prepare(
+      `
     SELECT * FROM todos
     WHERE id = ?
-  `).get(result.lastInsertRowid);
+  `,
+    )
+    .get(result.lastInsertRowid);
 
-	res.json(newTodo);
+  res.json(newTodo);
 });
 
-
 app.put("/todos/:id", (req, res) => {
-	const { title, desc, status } = req.body;
+  const { title, desc, status } = req.body;
 
-	db.prepare(`
+  db.prepare(
+    `
     UPDATE todos
     SET
       title = COALESCE(?, title),
       desc = COALESCE(?, desc),
       status = COALESCE(?, status)
     WHERE id = ?
-  `).run(title, desc, status, req.params.id);
+  `,
+  ).run(title, desc, status, req.params.id);
 
-	const updated = db.prepare(`
+  const updated = db
+    .prepare(
+      `
     SELECT * FROM todos
     WHERE id = ?
-  `).get(req.params.id);
+  `,
+    )
+    .get(req.params.id);
 
-	res.json(updated);
+  res.json(updated);
 });
 
 app.delete("/todos/:id", (req, res) => {
-	db.prepare(`
+  db.prepare(
+    `
     DELETE FROM todos
     WHERE id = ?
-  `).run(req.params.id);
+  `,
+  ).run(req.params.id);
 
-	res.json({ success: true });
+  res.json({ success: true });
 });
-
 
 app.listen(3030, "0.0.0.0", () => {
-	  console.log("Todo API running on port 3030");
+  console.log("Todo API running on port 3030");
 });
-

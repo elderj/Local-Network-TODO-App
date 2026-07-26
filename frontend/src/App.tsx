@@ -1,11 +1,10 @@
-import './App.css'
+import "./App.css";
 import { useEffect, useState } from "react";
-import TodoCard from './components/TodoCard';
-import { TODO_STATUSES } from './types/todo';
+import TodoCard from "./components/TodoCard";
+import { TODO_STATUSES } from "./types/todo";
 import type { Todo, TodoStatus } from "./types/todo";
 
 const API = "http://192.168.1.190:3030";
-
 
 export default function App() {
   const [todos, setTodos] = useState<Todo[]>([]);
@@ -14,27 +13,26 @@ export default function App() {
 
   useEffect(() => {
     fetch(`${API}/todos`)
-      .then(res => res.json())
-      .then(data => setTodos(data));
+      .then((res) => res.json())
+      .then((data) => setTodos(data));
   }, []);
-
 
   function addTodo() {
     if (title !== "") {
       fetch("http://192.168.1.190:3030/todos", {
         method: "POST",
         headers: {
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
           title,
           desc,
-          status: "backlog"
-        })
+          status: "backlog",
+        }),
       })
-        .then(res => res.json())
-        .then(newTodo => {
-          setTodos(prev => [...prev, newTodo]);
+        .then((res) => res.json())
+        .then((newTodo) => {
+          setTodos((prev) => [...prev, newTodo]);
           setTitle("");
           setDesc("");
         });
@@ -43,65 +41,50 @@ export default function App() {
 
   function deleteTodo(id: number) {
     fetch(`http://192.168.1.190:3030/todos/${id}`, {
-      method: "DELETE"
+      method: "DELETE",
     })
-      .then(res => res.json())
+      .then((res) => res.json())
       .then(() => {
-        setTodos(prev => prev.filter(todo => todo.id !== id));
+        setTodos((prev) => prev.filter((todo) => todo.id !== id));
       });
   }
 
-
-  function saveEdit(
-    id: number,
-    title: string,
-    desc: string
-  ) {
-    console.log("SAVE EDIT CALLED")
-    console.log("ID: " + id)
-    console.log("TITLE: " + title)
-    console.log("DESC: " + desc)
+  function saveEdit(id: number, title: string, desc: string) {
+    console.log("SAVE EDIT CALLED");
+    console.log("ID: " + id);
+    console.log("TITLE: " + title);
+    console.log("DESC: " + desc);
     fetch(`http://192.168.1.190:3030/todos/${id}`, {
       method: "PUT",
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({
         title,
-        desc
-      })
+        desc,
+      }),
     })
-      .then(res => res.json())
-      .then(updated => {
-        setTodos(prev =>
-          prev.map(t =>
-            t.id === id ? updated : t
-          )
-        );
+      .then((res) => res.json())
+      .then((updated) => {
+        setTodos((prev) => prev.map((t) => (t.id === id ? updated : t)));
       });
   }
 
-  function updateStatus(
-    id: number,
-    status: TodoStatus
-  ) {
+  function updateStatus(id: number, status: TodoStatus) {
     fetch(`http://192.168.1.190:3030/todos/${id}`, {
       method: "PUT",
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
       },
-      body: JSON.stringify({ status })
+      body: JSON.stringify({ status }),
     })
-      .then(res => res.json())
-      .then(updated => {
-        setTodos(prev =>
-          prev.map(t =>
-            t.id === updated.id ? updated : t
-          )
+      .then((res) => res.json())
+      .then((updated) => {
+        setTodos((prev) =>
+          prev.map((t) => (t.id === updated.id ? updated : t)),
         );
       });
   }
-
 
   return (
     <div className="container" style={{ padding: 20 }}>
@@ -122,25 +105,26 @@ export default function App() {
           onChange={(e) => setDesc(e.target.value)}
         />
         <br />
-        <button onClick={addTodo}>
-          Add Todo
-        </button>
+        <button onClick={addTodo}>Add Todo</button>
       </div>
 
-
       <div className="board">
-        {TODO_STATUSES.map(status => (
+        {TODO_STATUSES.map((status) => (
           <div className="column" key={status}>
             <h2>{status}</h2>
             {todos
-              .filter(todo => todo.status === status)
-              .map(todo => (
-                <TodoCard todo={todo} updateStatus={updateStatus} deleteTodo={deleteTodo} saveEdit={saveEdit} />
+              .filter((todo) => todo.status === status)
+              .map((todo) => (
+                <TodoCard
+                  todo={todo}
+                  updateStatus={updateStatus}
+                  deleteTodo={deleteTodo}
+                  saveEdit={saveEdit}
+                />
               ))}
           </div>
         ))}
       </div>
-
-    </div >
+    </div>
   );
 }

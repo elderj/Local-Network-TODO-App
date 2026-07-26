@@ -9,11 +9,28 @@ services:
       - ./frontend:/app
       - /app/node_modules
     command: npm run host-dev
-  backend:
+
+  backend-node:
+    profiles:
+      - node
     build:
       context: ./backend-node
-    container_name: todo-backend
+    container_name: todo-backend-node
     ports:
       - "3030:3030"
     volumes:
       - ./database:/database
+
+  backend-rails:
+    profiles:
+      - rails
+    build:
+      context: ./backend-rails
+    container_name: todo-backend-rails
+    ports:
+      - "3030:3000"
+    volumes:
+      - ./database:/database
+    environment:
+      RAILS_ENV: development
+    command: bin/rails server -b 0.0.0.0

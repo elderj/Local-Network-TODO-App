@@ -5,13 +5,15 @@ const dbPath = path.join(__dirname, "../../database/todos.db");
 
 const db = new Database(dbPath);
 
-db.prepare(`
+db.prepare(
+  `
   CREATE TABLE IF NOT EXISTS todos (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     title TEXT NOT NULL,
     desc TEXT DEFAULT '',
     status TEXT DEFAULT 'backlog'
   )
-`).run();
+`,
+).run();
 
 module.exports = db;
