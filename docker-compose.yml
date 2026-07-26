@@ -10,12 +10,12 @@ services:
       - /app/node_modules
     command: npm run host-dev
 
-  backend-node:
+  backend-express:
     profiles:
       - node
     build:
-      context: ./backend-node
-    container_name: todo-backend-node
+      context: ./backend-express
+    container_name: todo-backend-express
     ports:
       - "3030:3030"
     volumes:
@@ -34,3 +34,16 @@ services:
     environment:
       RAILS_ENV: development
     command: bin/rails server -b 0.0.0.0
+
+  backend-fastapi:
+    profiles:
+      - fastapi
+    build:
+      context: ./backend-fastapi
+    container_name: todo-backend-fastapi
+    ports:
+      - "3030:3000"
+    volumes:
+      - ./database:/database
+    environment:
+      DATABASE_PATH: /database/todos.db

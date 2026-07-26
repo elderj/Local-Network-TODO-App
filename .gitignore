@@ -8,6 +8,11 @@ tmp/*
 storage/*.sqlite3
 .bundle/
 
+# Python
+.venv/
+__pycache__/
+*.pyc
+
 # SQLite runtime files
 database/*.db-shm
 database/*.db-wal

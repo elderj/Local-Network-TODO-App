@@ -11,6 +11,7 @@ Designed to run on a Raspberry Pi 5 on my internal network allowing for any devi
 - React + Vite frontend
 - Node.js + Express REST API
 - Ruby on Rails REST API
+- Python FastAPI REST API
 - Interchangeable backend architecture
   - Backend selection via Docker Compose profiles
   - Frontend remains unchanged between backend implementations
@@ -19,7 +20,6 @@ Designed to run on a Raspberry Pi 5 on my internal network allowing for any devi
 
 ## Planned Features
 
-- Optional FastAPI implementation
 - PostgreSQL shared database
 
 ## Project Structure
@@ -31,12 +31,16 @@ home-todos/
 │   ├── React + Vite application
 │   └── Dockerfile
 │
-├── backend-node/
+├── backend-express/
 │   ├── Express REST API
 │   └── Dockerfile
 │
 ├── backend-rails/
 │   ├── Rails REST API
+│   └── Dockerfile
+|
+├── backend-fastapi/
+│   ├── FastAPI REST API
 │   └── Dockerfile
 │
 ├── database/
@@ -57,13 +61,19 @@ From the project root:
 ### Node.js backend
 
 ```bash
-docker compose --profile node up --build
+docker compose --profile express up --build
 ```
 
 ### Ruby on Rails backend
 
 ```bash
 docker compose --profile rails up --build
+```
+
+### Python FastAPI backend
+
+```bash
+docker compose --profile fastapi up --build
 ```
 
 The application will be available at:
